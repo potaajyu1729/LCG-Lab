@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LCG Random Number Generator, Analyzer & Predictor.">
+    <title>LCG Lab</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div>
+            <h1>LCG Lab</h1>
+            <p data-i18n="description">
+                LCGの乱数生成・解析・予測ツール。
+            </p>
+        </div>
+
+        <button id="languageButton" class="secondary-button">
+            English
+        </button>
+    </header>
+
+    <main class="container">
+        <section class="settings panel">
+            <h2 data-i18n="settings">共通設定</h2>
+
+            <div class="settings-grid">
+                <label>
+                    <span data-i18n="stateBits">内部状態ビット数</span>
+                    <input id="stateBits" type="number" min="2" max="64" value="32">
+                </label>
+
+                <label>
+                    <span data-i18n="outputBits">出力ビット数</span>
+                    <input id="outputBits" type="number" min="1" max="32" value="16">
+                </label>
+
+                <label>
+                    <span data-i18n="multiplier">乗数 (Multiplier)</span>
+                    <input id="multiplier" type="text" value="1664525">
+                </label>
+
+                <label>
+                    <span data-i18n="addend">加算値 (Addend)</span>
+                    <input id="addend" type="text" value="1013904223">
+                </label>
+            </div>
+
+            <p class="hint" data-i18n="settingsHint">
+                設定は生成と解析の両方に適用されます。
+            </p>
+        </section>
+
+        <div class="workspace">
+            <section class="panel">
+                <div class="section-heading">
+                    <h2 data-i18n="generator">乱数生成</h2>
+                </div>
+
+                <div class="field">
+                    <label for="seed" data-i18n="seed">シード値</label>
+                    <div class="input-with-button">
+                        <input id="seed" type="text" value="12345">
+                        <button id="randomSeedButton" class="secondary-button" data-i18n="randomSeed">
+                            ランダム
+                        </button>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="count" data-i18n="count">生成数</label>
+                    <input id="count" type="number" min="1" max="10000" value="20">
+                </div>
+
+                <div class="field">
+                    <label for="outputFormat" data-i18n="format">出力形式</label>
+                    <select id="outputFormat">
+                        <option value="unsigned">Unsigned</option>
+                        <option value="signed">Signed</option>
+                        <option value="hex">Hexadecimal</option>
+                    </select>
+                </div>
+
+                <label class="checkbox-field">
+                    <input id="javaMode" type="checkbox">
+                    <span data-i18n="javaMode">Java Randomモード</span>
+                </label>
+
+                <button id="generateButton" class="primary-button" data-i18n="generate">
+                    生成する
+                </button>
+
+                <div class="result-header">
+                    <h3 data-i18n="generatedResults">生成結果</h3>
+                    <span id="generatedCount" class="count-label">0</span>
+                </div>
+
+                <div class="button-row">
+                    <button id="csvButton" class="secondary-button" data-i18n="exportCsv">
+                        CSV出力
+                    </button>
+                    <button id="jsonButton" class="secondary-button" data-i18n="exportJson">
+                        JSON出力
+                    </button>
+                    <button id="clearGeneratorButton" class="danger-button" data-i18n="clear">
+                        クリア
+                    </button>
+                </div>
+
+                <div id="generatorOutput" class="output-area">
+                    <p class="placeholder" data-i18n="noResults">
+                        まだ生成結果がありません。
+                    </p>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="section-heading">
+                    <h2 data-i18n="analyzer">状態解析・予測</h2>
+                </div>
+
+                <div class="field">
+                    <label for="analysisCount" data-i18n="analysisCount">
+                        解析に使用する個数
+                    </label>
+                    <input id="analysisCount" type="number" min="2" max="20" value="20">
+                </div>
+
+                <div class="button-row">
+                    <button id="fillFirstButton" class="secondary-button" data-i18n="fillGenerated">
+                        生成結果を入力
+                    </button>
+                    <button id="clearAnalyzerButton" class="danger-button" data-i18n="clear">
+                        クリア
+                    </button>
+                </div>
+
+                <div class="field">
+                    <label for="observations" data-i18n="observations">
+                        観測された乱数
+                    </label>
+                    <textarea id="observations" rows="9" placeholder="例: 3 12 10 13 12 3 8 13"></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="predictionCount" data-i18n="predictionCount">
+                        予測する個数
+                    </label>
+                    <input id="predictionCount" type="number" min="1" max="1000" value="10">
+                </div>
+
+                <button id="analyzeButton" class="primary-button" data-i18n="analyze">
+                    解析する
+                </button>
+
+                <div class="result-header">
+                    <h3 data-i18n="analysisResults">解析結果</h3>
+                </div>
+
+                <div id="analyzerOutput" class="output-area">
+                    <p class="placeholder" data-i18n="noAnalysis">
+                        まだ解析されていません。
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <section class="panel help-panel">
+            <h2 data-i18n="about">LCGについて</h2>
+            <p data-i18n="aboutText">
+                LCG（線形合同法）は、前の内部状態を利用して次の状態を計算する疑似乱数生成方式です。
+            </p>
+            <div class="formula">
+                X<sub>n+1</sub> = (aX<sub>n</sub> + c) mod m
+            </div>
+            <p data-i18n="aboutDetail">
+                aは乗数、cは加算値、mは内部状態の範囲を表します。
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>LCG Lab</p>
+    </footer>
+
+    <script src="js/lcg.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/generator.js"></script>
+    <script src="js/analyzer.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
