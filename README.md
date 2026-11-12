@@ -8,20 +8,21 @@ LCGの乱数生成・解析・予測ツール。 / LCG Random Number Generator, 
 
 ## 概要
 
-LCG Labは、線形合同法（LCG）を使用して乱数の生成・解析・予測を行う学習用ツールです。
+LCG Labは、線形合同法（LCG）を使用して疑似乱数の生成・解析・予測を行う学習用ツールです。
 
-疑似乱数生成器の仕組みや、出力された乱数から内部状態を復元する仕組みを学ぶことを目的としています。
+疑似乱数生成器の仕組みや、観測された乱数から内部状態を復元する仕組みを学ぶことを目的としています。
 
 ## 主な機能
 
-- LCGによる乱数生成
-- 内部状態の解析・復元
+- LCGによる疑似乱数の生成
+- 内部状態の解析と復元
 - 次の乱数の予測
 - Java Randomモード
-- ランダムシード生成
-- Unsigned / Signed / 16進数形式への対応
-- CSV / JSON出力
+- ランダムシードの生成
+- Unsigned / Signed / Hexadecimal形式に対応
+- CSV / JSON形式でのエクスポート
 - 日本語 / 英語の切り替え
+- ブラウザ上で動作
 
 ## 動作環境
 
@@ -37,7 +38,7 @@ LCG Labは、線形合同法（LCG）を使用して乱数の生成・解析・�
 2. 乗数・加算値・シード値を設定します。
 3. 生成数を指定して乱数を生成します。
 4. 生成した数値を解析欄に入力します。
-5. 解析を実行すると、内部状態の候補を探索し、次の乱数を予測します。
+5. 解析を実行すると、内部状態を探索し、次の乱数を予測します。
 
 ## 解析方式について
 
@@ -97,9 +98,9 @@ cd LCG-Lab
 
 ### 3. Run
 
-Open `index.html` in your browser.
+Open `index.html` in your web browser.
 
-You can also use VS Code with Live Server.
+You can also use the Live Server extension in Visual Studio Code.
 
 ## How It Works
 
@@ -139,7 +140,7 @@ No external libraries or frameworks are required.
 
 This project was developed with assistance from **ChatGPT by OpenAI**.
 
-README documentation, code organization, implementation, and debugging were supported by AI assistance.
+AI assistance was used for code implementation, project organization, documentation, and debugging.
 
 ## License
 
